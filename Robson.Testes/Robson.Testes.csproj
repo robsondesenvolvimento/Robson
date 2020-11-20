@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
 
@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Robson.Domain\Robson.Domain.csproj" />
+    <ProjectReference Include="..\Robson.Repository\Robson.Repository.csproj" />
   </ItemGroup>
 
 </Project>

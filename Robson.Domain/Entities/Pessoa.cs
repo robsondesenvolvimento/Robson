@@ -4,13 +4,8 @@ namespace Robson.Domain.Entities
 {
     public class Pessoa
     {
-        public string Nome { get; private set; }
-        public DateTime Nascimento { get; private set; }
-
-        public Pessoa(string nome, DateTime nascimento)
-        {
-            this.Nome = nome;
-            this.Nascimento = nascimento;
-        }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public DateTime Nascimento { get; set; }
     }
 }
