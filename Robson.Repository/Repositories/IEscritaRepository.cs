@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
 
 namespace Robson.Repository.Repositories
 {
     public interface IEscritaRepository<T>
     {
-        void Incluir(T objeto);
+        Task<int> Incluir(T objeto);
     }
 }

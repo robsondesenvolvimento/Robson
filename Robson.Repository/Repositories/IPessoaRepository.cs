@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Robson.Repository.Repositories
+﻿namespace Robson.Repository.Repositories
 {
-    public interface IPessoaRepository<T> : IEscritaRepository<T>
+    public interface IPessoaRepository<T> : IEscritaRepository<T>, ILeituraRepository<T>
     {
     }
 }

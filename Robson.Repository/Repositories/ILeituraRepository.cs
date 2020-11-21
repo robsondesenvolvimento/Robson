@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
 
 namespace Robson.Repository.Repositories
 {
-    public interface ILeituraRepository
+    public interface ILeituraRepository<T>
     {
+        Task<T> PesquisaId(int id);
     }
 }
