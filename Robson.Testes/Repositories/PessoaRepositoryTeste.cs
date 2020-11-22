@@ -26,15 +26,43 @@ namespace Robson.Testes.Repositories
                 Nascimento = DateTime.Parse("1980-08-29")
             };
 
-            var pessoaId = await _pessoaRepository.Incluir(pessoa);
+            var pessoaId = await _pessoaRepository.IncluirAsync(pessoa);
             Assert.Equal(1, pessoaId);
         }
 
         [Fact, TestPriority(1)]
-        public async Task PessoaRepositoryPesquisa()
+        public async Task PessoaRepositoryPesquisarId()
         {
-            var pesquisaPessoa = await _pessoaRepository.PesquisaId(1);
+            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
             Assert.Equal("Robson Candido dos Santos Alves", pesquisaPessoa.Nome);
+        }
+
+        [Fact, TestPriority(2)]
+        public async Task PessoaRepositoryPesquisarNome()
+        {
+            var pesquisaPessoa = await _pessoaRepository.PesquisarAsync(pessoa => pessoa.Nome == "Robson Candido dos Santos Alves");
+            Assert.Equal("Robson Candido dos Santos Alves", pesquisaPessoa.Nome);
+        }
+
+        [Fact, TestPriority(3)]
+        public async Task PessoaRepositoryAlterarPessoa()
+        {
+            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
+            pesquisaPessoa.Nome = "Robson Alves";
+
+            await _pessoaRepository.AlterarAsync(pesquisaPessoa);
+
+            pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
+            Assert.Equal("Robson Alves", pesquisaPessoa.Nome);
+        }
+
+        [Fact, TestPriority(4)]
+        public async Task PessoaRepositoryExcluirPessoa()
+        {
+            await _pessoaRepository.ExcluirAsync(1);
+
+            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
+            Assert.Null(pesquisaPessoa);
         }
     }
 }
