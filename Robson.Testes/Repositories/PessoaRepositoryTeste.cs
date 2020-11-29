@@ -1,5 +1,4 @@
-﻿using Robson.Domain.Entities;
-using Robson.Repository.Context;
+﻿using Robson.Repository.Context;
 using Robson.Repository.Repositories;
 using System;
 using System.Threading.Tasks;
@@ -20,13 +19,22 @@ namespace Robson.Testes.Repositories
         [Fact, TestPriority(0)]
         public async Task PessoaRepositoryIncluir()
         {
-            var pessoa = new Pessoa
-            {
-                Nome = "Robson Candido dos Santos Alves",
-                Nascimento = DateTime.Parse("1980-08-29")
-            };
+            var pessoaId = await _pessoaRepository.IncluirAsync(
+                new()
+                {
+                    Nome = "Robson Candido dos Santos Alves",
+                    Nascimento = DateTime.Parse("1980-08-29"),
+                    Celular = "(41) 98827-07693",
+                    Cep = "80050-205",
+                    Rua = "Rua Do Herval, 378",
+                    Complemento = "Apto. 3",
+                    Bairro = "Cristo Rei",
+                    Cidade = "Curitiba",
+                    Estado = "Paraná",
+                    Pais = "Brasil"
+                }
+            );
 
-            var pessoaId = await _pessoaRepository.IncluirAsync(pessoa);
             Assert.Equal(1, pessoaId);
         }
 
