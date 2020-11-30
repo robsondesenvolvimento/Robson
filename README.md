@@ -18,4 +18,8 @@ https://docs.microsoft.com/pt-br/dotnet/csharp/whats-new/csharp-9
 https://docs.microsoft.com/pt-br/dotnet/core/dotnet-five
 https://docs.microsoft.com/pt-br/dotnet/standard/serialization/system-text-json-how-to#httpclient-and-httpcontent-extension-methods
 https://docs.microsoft.com/pt-br/dotnet/standard/serialization/system-text-json-how-to#immutable-types-and-records
+
+EntityFramework Core 5
+https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-5.0/whatsnew
+https://www.learnentityframeworkcore.com/
 ```

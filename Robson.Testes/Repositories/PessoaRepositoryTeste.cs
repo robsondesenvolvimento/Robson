@@ -10,20 +10,21 @@ namespace Robson.Testes.Repositories
     public class PessoaRepositoryTeste
     {
         private readonly PessoaRepository _pessoaRepository;
+        private static int _pessoaId;
 
         public PessoaRepositoryTeste()
         {
-            _pessoaRepository = new PessoaRepository(new DatabaseContext());
+            _pessoaRepository = new PessoaRepository(new());
         }
 
-        [Fact, TestPriority(0)]
+        [Fact, TestPriority(1)]
         public async Task PessoaRepositoryIncluir()
         {
-            var pessoaId = await _pessoaRepository.IncluirAsync(
+            _pessoaId = await _pessoaRepository.IncluirAsync(
                 new()
                 {
-                    Nome = "Robson Candido dos Santos Alves",
-                    Nascimento = DateTime.Parse("1980-08-29"),
+                    Nome = "Teste de Unidade Pessoa",
+                    Nascimento = DateTime.Parse("2019-07-21"),
                     Celular = "(41) 98827-07693",
                     Cep = "80050-205",
                     Rua = "Rua Do Herval, 378",
@@ -35,41 +36,41 @@ namespace Robson.Testes.Repositories
                 }
             );
 
-            Assert.Equal(1, pessoaId);
-        }
-
-        [Fact, TestPriority(1)]
-        public async Task PessoaRepositoryPesquisarId()
-        {
-            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
-            Assert.Equal("Robson Candido dos Santos Alves", pesquisaPessoa.Nome);
+            Assert.True(_pessoaId > 0);
         }
 
         [Fact, TestPriority(2)]
-        public async Task PessoaRepositoryPesquisarNome()
+        public async Task PessoaRepositoryPesquisarId()
         {
-            var pesquisaPessoa = await _pessoaRepository.PesquisarAsync(pessoa => pessoa.Nome == "Robson Candido dos Santos Alves");
-            Assert.Equal("Robson Candido dos Santos Alves", pesquisaPessoa.Nome);
+            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(_pessoaId);
+            Assert.Equal("Teste de Unidade Pessoa", pesquisaPessoa.Nome);
         }
 
         [Fact, TestPriority(3)]
+        public async Task PessoaRepositoryPesquisarNome()
+        {
+            var pesquisaPessoa = await _pessoaRepository.PesquisarAsync(pessoa => pessoa.Nome == "Teste de Unidade Pessoa");
+            Assert.Equal("Teste de Unidade Pessoa", pesquisaPessoa.Nome);
+        }
+
+        [Fact, TestPriority(4)]
         public async Task PessoaRepositoryAlterarPessoa()
         {
             var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
-            pesquisaPessoa.Nome = "Robson Alves";
+            pesquisaPessoa.Nome = "Teste de Unidade Pessoa X";
 
             await _pessoaRepository.AlterarAsync(pesquisaPessoa);
 
             pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
-            Assert.Equal("Robson Alves", pesquisaPessoa.Nome);
+            Assert.Equal("Teste de Unidade Pessoa X", pesquisaPessoa.Nome);
         }
 
-        [Fact, TestPriority(4)]
+        [Fact, TestPriority(5)]
         public async Task PessoaRepositoryExcluirPessoa()
         {
-            await _pessoaRepository.ExcluirAsync(1);
+            await _pessoaRepository.ExcluirAsync(_pessoaId);
 
-            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
+            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(_pessoaId);
             Assert.Null(pesquisaPessoa);
         }
     }

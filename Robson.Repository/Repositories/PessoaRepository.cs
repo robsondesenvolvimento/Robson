@@ -48,9 +48,23 @@ namespace Robson.Repository.Repositories
         {
             try
             {
-                await _databaseContext.AddAsync(pessoa);
+                await _databaseContext.Pessoas.AddAsync(pessoa);
                 await _databaseContext.SaveChangesAsync();
                 return pessoa.Id;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Erro ao incluir pessoa.", e);
+            }
+        }
+
+        public async Task<int> IncluirListaAsync(IEnumerable<Pessoa> pessoa)
+        {
+            try
+            {
+                await _databaseContext.Pessoas.AddRangeAsync(pessoa);
+                var alteracoes = await _databaseContext.SaveChangesAsync();
+                return alteracoes;
             }
             catch (Exception e)
             {

@@ -1,5 +1,6 @@
 ﻿using Robson.Domain.Entities;
 using Robson.Repository.Context;
+using Robson.Repository.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,9 +64,8 @@ namespace Robson.Repository.Services
                     }
                 };
 
-                await databaseContext.Carreiras.AddRangeAsync(carreiras);
-
-                await databaseContext.SaveChangesAsync();
+                var carreiraRepository = new CarreiraRepository(databaseContext);
+                await carreiraRepository.IncluirListaAsync(carreiras);
             }
         }
     }

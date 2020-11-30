@@ -11,6 +11,8 @@ namespace Robson.Repository.Context
 
         public DatabaseContext()
         {
+            PessoaSeedingService.InicializandoBaseDedDados(this).Wait();
+            CarreiraSeedingService.InicializandoBaseDedDados(this).Wait();
         }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
