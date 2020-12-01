@@ -1,5 +1,4 @@
-﻿using Robson.Repository.Context;
-using Robson.Repository.Repositories;
+﻿using Robson.Repository.Repositories;
 using System;
 using System.Threading.Tasks;
 using Xunit;

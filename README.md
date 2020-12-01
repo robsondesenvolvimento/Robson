@@ -21,5 +21,7 @@ https://docs.microsoft.com/pt-br/dotnet/standard/serialization/system-text-json-
 
 EntityFramework Core 5
 https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-5.0/whatsnew
+https://www.learnentityframeworkcore5.com/whats-new-in-ef-core-5
 https://www.learnentityframeworkcore.com/
+https://balta.io/artigos/entity-framework-core-5-preview-1
 ```
