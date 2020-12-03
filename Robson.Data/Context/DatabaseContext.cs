@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Robson.Domain.Entities;
 
-namespace Robson.Repository.Context
+namespace Robson.Data.Context
 {
     public class DatabaseContext : DbContext
     {

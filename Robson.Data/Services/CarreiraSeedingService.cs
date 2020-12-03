@@ -1,12 +1,12 @@
-﻿using Robson.Domain.Entities;
-using Robson.Repository.Context;
-using Robson.Repository.Repositories;
+﻿using Robson.Data.Context;
+using Robson.Data.Repositories;
+using Robson.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Robson.Repository.Services
+namespace Robson.Data.Services
 {
     public static class CarreiraSeedingService
     {

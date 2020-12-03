@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Robson.Data.Context;
 using Robson.Domain.Entities;
-using Robson.Repository.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Robson.Repository.Repositories
+namespace Robson.Data.Repositories
 {
     public class CarreiraRepository : ICarreiraRepository
     {

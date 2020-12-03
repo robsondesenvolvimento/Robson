@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Robson.Domain.Entities
 {
     public class Instituicao
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Nome da instituição é obrigatório")]
         public string Nome { get; set; }
+
         public ICollection<Curso> Cursos { get; set; }
     }
 }

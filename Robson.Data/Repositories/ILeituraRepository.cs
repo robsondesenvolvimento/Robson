@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Robson.Repository.Repositories
+namespace Robson.Data.Repositories
 {
     public interface ILeituraRepository<T>
     {

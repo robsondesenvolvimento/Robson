@@ -1,4 +1,6 @@
-﻿using Robson.Repository.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Robson.Data.Context;
+using Robson.Data.Repositories;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -9,17 +11,18 @@ namespace Robson.Testes.Repositories
     public class PessoaRepositoryTeste
     {
         private readonly PessoaRepository _pessoaRepository;
-        private static int _pessoaId;
 
         public PessoaRepositoryTeste()
         {
-            _pessoaRepository = new PessoaRepository(new());
+            DbContextOptionsBuilder<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>();
+            options.UseInMemoryDatabase("PessoaRepositoryTeste");
+            _pessoaRepository = new PessoaRepository(new(options.Options));
         }
 
         [Fact, TestPriority(1)]
         public async Task PessoaRepositoryIncluir()
         {
-            _pessoaId = await _pessoaRepository.IncluirAsync(
+            var _pessoaId = await _pessoaRepository.IncluirAsync(
                 new()
                 {
                     Nome = "Teste de Unidade Pessoa",
@@ -35,13 +38,13 @@ namespace Robson.Testes.Repositories
                 }
             );
 
-            Assert.True(_pessoaId > 0);
+            Assert.Equal(1, _pessoaId);
         }
 
         [Fact, TestPriority(2)]
         public async Task PessoaRepositoryPesquisarId()
         {
-            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(_pessoaId);
+            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
             Assert.Equal("Teste de Unidade Pessoa", pesquisaPessoa.Nome);
         }
 
@@ -67,9 +70,9 @@ namespace Robson.Testes.Repositories
         [Fact, TestPriority(5)]
         public async Task PessoaRepositoryExcluirPessoa()
         {
-            await _pessoaRepository.ExcluirAsync(_pessoaId);
+            await _pessoaRepository.ExcluirAsync(1);
 
-            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(_pessoaId);
+            var pesquisaPessoa = await _pessoaRepository.PesquisarIdAsync(1);
             Assert.Null(pesquisaPessoa);
         }
     }
