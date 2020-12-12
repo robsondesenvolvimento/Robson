@@ -1,16 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
+using Robson.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Robson.Testes.Data
 {
-    public class PessoaRepositoryPesquisarIdAsync
+    public class PessoaRepositoryIncluirListaAsync
     {
         [Fact]
-        public async Task PesquisarPorIdERetornaPessoa()
+        public async Task IncluirListaDePessoasERetornaTotalDeRegistrosInseridos()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -18,7 +20,8 @@ namespace Robson.Testes.Data
 
             var repository = new PessoaRepository(new(options));
 
-            await repository.IncluirAsync(
+            var listaDePessoas = new List<Pessoa>
+            {
                 new()
                 {
                     Nome = "Teste de Unidade Pessoa 1",
@@ -31,10 +34,7 @@ namespace Robson.Testes.Data
                     Cidade = "Curitiba",
                     Estado = "Paraná",
                     Pais = "Brasil"
-                }
-            );
-
-            await repository.IncluirAsync(
+                },
                 new()
                 {
                     Nome = "Teste de Unidade Pessoa 2",
@@ -47,10 +47,7 @@ namespace Robson.Testes.Data
                     Cidade = "Curitiba",
                     Estado = "Paraná",
                     Pais = "Brasil"
-                }
-            );
-
-            await repository.IncluirAsync(
+                },
                 new()
                 {
                     Nome = "Teste de Unidade Pessoa 3",
@@ -64,10 +61,11 @@ namespace Robson.Testes.Data
                     Estado = "Paraná",
                     Pais = "Brasil"
                 }
-            );
+            };
 
-            var buscaPessoa = await repository.PesquisarIdAsync(2);
-            Assert.Equal("Teste de Unidade Pessoa 2", buscaPessoa.Nome);
+            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(listaDePessoas);
+
+            Assert.Equal(3, totalDeRegistrosInseridos);
         }
     }
 }

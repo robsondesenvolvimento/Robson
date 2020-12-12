@@ -2,15 +2,14 @@
 using Robson.Data.Context;
 using Robson.Data.Repositories;
 using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Robson.Testes.Data
 {
-    public class PessoaRepositoryPesquisarIdAsync
+    public class PessoaRepositoryExcluirAsync
     {
         [Fact]
-        public async Task PesquisarPorIdERetornaPessoa()
+        public async void ExcluirPessoa()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -66,8 +65,11 @@ namespace Robson.Testes.Data
                 }
             );
 
-            var buscaPessoa = await repository.PesquisarIdAsync(2);
-            Assert.Equal("Teste de Unidade Pessoa 2", buscaPessoa.Nome);
+            await repository.ExcluirAsync(1);
+
+            var pesquisaPessoa = await repository.PesquisarIdAsync(1);
+
+            Assert.Null(pesquisaPessoa);
         }
     }
 }

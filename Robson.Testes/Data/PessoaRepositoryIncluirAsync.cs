@@ -2,23 +2,18 @@
 using Robson.Data.Context;
 using Robson.Data.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using Moq;
-using Robson.Domain.Entities;
 
 namespace Robson.Testes.Data
 {
     public class PessoaRepositoryIncluirAsync
     {
         [Fact]
-        public async Task IncluirPessoaEVerificaIdRetornado()
+        public async Task IncluirPessoaERetornaNovoIdDaPessoaIncluida()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
-                .UseInMemoryDatabase("PessoaRepositoryIncluirAsync")
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
             var repository = new PessoaRepository(new(options));
