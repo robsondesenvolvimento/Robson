@@ -1,15 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
+using Robson.Domain.Entities;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace Robson.Testes.Data
+namespace Robson.Testes.Data.PessoaRepositoryTeste
 {
-    public class PessoaRepositoryAlterarAsync
+    public class CarreiraRepositoryIncluirListaAsync
     {
         [Fact]
-        public async void AlteraDadosDaPessoa()
+        public async Task IncluirListaDePessoasERetornaTotalDeRegistrosInseridos()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -17,7 +20,8 @@ namespace Robson.Testes.Data
 
             var repository = new PessoaRepository(new(options));
 
-            await repository.IncluirAsync(
+            var listaDePessoas = new List<Pessoa>
+            {
                 new()
                 {
                     Nome = "Teste de Unidade Pessoa 1",
@@ -30,10 +34,7 @@ namespace Robson.Testes.Data
                     Cidade = "Curitiba",
                     Estado = "Paraná",
                     Pais = "Brasil"
-                }
-            );
-
-            await repository.IncluirAsync(
+                },
                 new()
                 {
                     Nome = "Teste de Unidade Pessoa 2",
@@ -46,10 +47,7 @@ namespace Robson.Testes.Data
                     Cidade = "Curitiba",
                     Estado = "Paraná",
                     Pais = "Brasil"
-                }
-            );
-
-            await repository.IncluirAsync(
+                },
                 new()
                 {
                     Nome = "Teste de Unidade Pessoa 3",
@@ -63,17 +61,11 @@ namespace Robson.Testes.Data
                     Estado = "Paraná",
                     Pais = "Brasil"
                 }
-            );
+            };
 
-            var pesquisaPessoa = await repository.PesquisarIdAsync(2);
+            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(listaDePessoas);
 
-            pesquisaPessoa.Nome = "Fulano foi alterado";
-
-            await repository.AlterarAsync(pesquisaPessoa);
-
-            pesquisaPessoa = await repository.PesquisarIdAsync(2);
-
-            Assert.Equal("Fulano foi alterado", pesquisaPessoa.Nome);
+            Assert.Equal(3, totalDeRegistrosInseridos);
         }
     }
 }

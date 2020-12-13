@@ -4,15 +4,16 @@ using Robson.Data.Repositories;
 using Robson.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Robson.Testes.Data
+namespace Robson.Testes.Data.PessoaRepositoryTeste
 {
-    public class PessoaRepositoryIncluirListaAsync
+    public class CarreiraRepositoryTodos
     {
         [Fact]
-        public async Task IncluirListaDePessoasERetornaTotalDeRegistrosInseridos()
+        public async Task RetornaListaDeTodasAsPessoas()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -63,9 +64,11 @@ namespace Robson.Testes.Data
                 }
             };
 
-            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(listaDePessoas);
+            await repository.IncluirListaAsync(listaDePessoas);
 
-            Assert.Equal(3, totalDeRegistrosInseridos);
+            var totalDeRegistrosInseridos = await repository.Todos();
+
+            Assert.Equal(3, totalDeRegistrosInseridos.ToList().Count);
         }
     }
 }

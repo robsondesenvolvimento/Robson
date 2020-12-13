@@ -5,9 +5,9 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Robson.Testes.Data
+namespace Robson.Testes.Data.PessoaRepositoryTeste
 {
-    public class PessoaRepositoryIncluirAsync
+    public class CarreiraRepositoryIncluirAsync
     {
         [Fact]
         public async Task IncluirPessoaERetornaNovoIdDaPessoaIncluida()

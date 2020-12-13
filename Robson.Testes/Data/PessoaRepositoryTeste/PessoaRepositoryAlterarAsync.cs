@@ -4,12 +4,12 @@ using Robson.Data.Repositories;
 using System;
 using Xunit;
 
-namespace Robson.Testes.Data
+namespace Robson.Testes.Data.PessoaRepositoryTeste
 {
-    public class PessoaRepositoryExcluirAsync
+    public class CarreiraRepositoryAlterarAsync
     {
         [Fact]
-        public async void ExcluirPessoa()
+        public async void AlteraDadosDaPessoa()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -65,11 +65,15 @@ namespace Robson.Testes.Data
                 }
             );
 
-            await repository.ExcluirAsync(1);
+            var pesquisaPessoa = await repository.PesquisarIdAsync(2);
 
-            var pesquisaPessoa = await repository.PesquisarIdAsync(1);
+            pesquisaPessoa.Nome = "Fulano foi alterado";
 
-            Assert.Null(pesquisaPessoa);
+            await repository.AlterarAsync(pesquisaPessoa);
+
+            pesquisaPessoa = await repository.PesquisarIdAsync(2);
+
+            Assert.Equal("Fulano foi alterado", pesquisaPessoa.Nome);
         }
     }
 }
