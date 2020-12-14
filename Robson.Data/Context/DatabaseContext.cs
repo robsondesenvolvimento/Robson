@@ -9,6 +9,7 @@ namespace Robson.Data.Context
         public DbSet<Carreira> Carreiras { get; set; }
         public DbSet<Instituicao> Instituicoes { get; set; }
         public DbSet<Curso> Cursos { get; set; }
+        public DbSet<Formacao> Formacoes { get; set; }
 
         public DatabaseContext()
         {

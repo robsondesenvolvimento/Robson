@@ -11,5 +11,6 @@ namespace Robson.Domain.Entities
         public string Nome { get; set; }
 
         public ICollection<Curso> Cursos { get; set; }
+        public ICollection<Formacao> Formacoes { get; set; }
     }
 }
