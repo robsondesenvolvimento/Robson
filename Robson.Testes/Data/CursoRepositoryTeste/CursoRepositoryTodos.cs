@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Robson.Testes.Data.CursoRepositoryTeste
 {
-    public class CursoRepositoryTodos
+    public class InstituicaoRepositoryTodos
     {
         [Fact]
         public async Task RetornaListaDeTodoOsCursos()

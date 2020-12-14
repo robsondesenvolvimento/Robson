@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Robson.Testes.Data.CursoRepositoryTeste
 {
-    public class CursoRepositoryAlterarAsync
+    public class InstituicaoRepositoryAlterarAsync
     {
         [Fact]
         public async void AlteraDadosDoCurso()

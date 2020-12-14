@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Robson.Testes.Data.CursoRepositoryTeste
 {
-    public class CursoRepositoryExcluirAsync
+    public class InstituicaoRepositoryExcluirAsync
     {
         [Fact]
         public async void ExcluirCurso()

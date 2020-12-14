@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Robson.Testes.Data.CursoRepositoryTeste
 {
-    public class CursoRepositoryIncluirAsync
+    public class InstituicaoRepositoryIncluirAsync
     {
         [Fact]
         public async Task IncluirCursosERetornaNovoIdDoCursoIncluido()

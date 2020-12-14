@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Robson.Testes.Data.CursoRepositoryTeste
 {
-    public class CursoRepositoryPesquisarIdAsync
+    public class InstituicaoRepositoryPesquisarIdAsync
     {
         [Fact]
         public async Task PesquisarPorIdERetornaCurso()
