@@ -49,7 +49,7 @@ namespace Robson.Testes.Data.FormacaoRepositoryTeste
 
             await repository.IncluirListaAsync(listaDeFormacoes);
 
-            var pesquisaFormacao= await repository.PesquisarAsync(curso => curso.Nome == "Curso de Desenvolvimento Asp.Net Core");
+            var pesquisaFormacao = await repository.PesquisarAsync(curso => curso.Nome == "Curso de Desenvolvimento Asp.Net Core");
             Assert.Equal(2, pesquisaFormacao.Id);
         }
     }

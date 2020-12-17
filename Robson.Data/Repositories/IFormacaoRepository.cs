@@ -1,4 +1,5 @@
-﻿using Robson.Domain.Entities;
+﻿using Robson.Domain.Contracts;
+using Robson.Domain.Entities;
 
 namespace Robson.Data.Repositories
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Robson.Data.Repositories
+namespace Robson.Domain.Contracts
 {
     public interface IEscritaRepository<T>
     {
