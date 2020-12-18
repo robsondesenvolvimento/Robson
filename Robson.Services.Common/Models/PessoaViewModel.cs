@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Robson.Domain.Entities
+namespace Robson.Services.Common.Models
 {
-    public class Pessoa
+    public class PessoaViewModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }
