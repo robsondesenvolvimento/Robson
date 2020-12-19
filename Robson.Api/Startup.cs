@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Robson.Api.Mappings;
+using Robson.Api.Services;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
 using Robson.Domain.Entities;
@@ -34,14 +35,14 @@ namespace Robson.Api
 
             services.AddScoped<IPessoaRepository<Pessoa>, PessoaRepository>();
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("PolicyRobson",
-            //    builder => builder
-            //        .AllowAnyOrigin()
-            //        .AllowAnyMethod()
-            //        .AllowAnyHeader());
-            //});
+            services.AddCors(options =>
+            {
+                options.AddPolicy("PolicyRobson",
+                builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
 
             services.AddControllers()
                 .AddJsonOptions(options =>
@@ -87,6 +88,10 @@ namespace Robson.Api
 
             app.UseRouting();
 
+            app.PessoaSeedingServiceStart();
+            app.CarreiraSeedingServiceStart();
+
+            app.UseCors("PolicyRobson");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

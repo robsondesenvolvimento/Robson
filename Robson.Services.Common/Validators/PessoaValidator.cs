@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Robson.Services.Common.Models;
+using System;
 
 namespace Robson.Services.Common.Validators
 {
@@ -7,11 +8,25 @@ namespace Robson.Services.Common.Validators
     {
         public PessoaValidator()
         {
-            RuleFor(r => r.Nome).NotEmpty();
-            RuleFor(r => r.Nascimento).NotEmpty();
-            RuleFor(r => r.Celular).NotEmpty();
-            RuleFor(r => r.Email).NotEmpty();
-            RuleFor(r => r.Pais).NotEmpty();
+            RuleFor(r => r.Nome)
+                .NotEmpty()
+                .Length(3, 50);
+
+            RuleFor(r => r.Nascimento)
+                .NotEmpty()
+                .LessThan(DateTime.Now);
+
+            RuleFor(r => r.Celular)
+                .NotEmpty();
+
+            RuleFor(r => r.Email)
+                .NotEmpty()
+                .EmailAddress()
+                .Length(3, 50);
+
+            RuleFor(r => r.Pais)
+                .NotEmpty()
+                .Length(3, 20);
         }
     }
 }

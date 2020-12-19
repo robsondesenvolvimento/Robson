@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Robson.Api\Robson.Api.csproj" />
     <ProjectReference Include="..\Robson.Data\Robson.Data.csproj" />
     <ProjectReference Include="..\Robson.Domain\Robson.Domain.csproj" />
   </ItemGroup>

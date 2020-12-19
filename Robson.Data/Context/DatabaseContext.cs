@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Robson.Data.Services;
 using Robson.Domain.Entities;
 
 namespace Robson.Data.Context
@@ -18,7 +17,6 @@ namespace Robson.Data.Context
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
-            PessoaSeedingService.InicializandoBaseDedDados(this).Wait();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

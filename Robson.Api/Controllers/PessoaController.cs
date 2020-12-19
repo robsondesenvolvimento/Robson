@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Robson.Data.Repositories;
@@ -11,9 +12,9 @@ using System.Threading.Tasks;
 namespace Robson.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [Produces("application/json")]
-    //[EnableCors("PolicyRobson")]
+    [EnableCors("PolicyRobson")]
     public class PessoaController : ControllerBase
     {
 
@@ -36,7 +37,20 @@ namespace Robson.Api.Controllers
             if (pessoas == null)
                 return NoContent();
 
-            var pessoaViewModel = _mapper.Map<IEnumerable<PessoaViewModel>>(pessoas).ToList();
+            var pessoasViewModel = _mapper.Map<IEnumerable<PessoaViewModel>>(pessoas).ToList();
+
+            return Ok(pessoasViewModel);
+        }
+
+        [HttpGet("{id?}")]
+        public async Task<ActionResult<PessoaViewModel>> Get(int id)
+        {
+            var pessoa = await _pessoaRepository.PesquisarIdAsync(id);
+
+            if (pessoa == null)
+                return NoContent();
+
+            var pessoaViewModel = _mapper.Map<PessoaViewModel>(pessoa);
 
             return Ok(pessoaViewModel);
         }
