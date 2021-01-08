@@ -24,4 +24,8 @@ https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-5.0/whatsnew
 https://www.learnentityframeworkcore5.com/whats-new-in-ef-core-5
 https://www.learnentityframeworkcore.com/
 https://balta.io/artigos/entity-framework-core-5-preview-1
+
+Outros
+https://docs.microsoft.com/pt-br/aspnet/core/security/cors?view=aspnetcore-5.0
+https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/middleware/?view=aspnetcore-5.0#middleware-order
 ```

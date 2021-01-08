@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
+using Robson.Testes.DataBuilder;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -18,21 +19,10 @@ namespace Robson.Testes.Data.PessoaRepositoryTeste
 
             var repository = new PessoaRepository(new(options));
 
-            var pessoaId = await repository.IncluirAsync(
-                new()
-                {
-                    Nome = "Teste de Unidade Pessoa",
-                    Nascimento = DateTime.Parse("2019-07-21"),
-                    Celular = "(41) 98827-07693",
-                    Cep = "80050-205",
-                    Rua = "Rua Do Herval, 378",
-                    Complemento = "Apto. 3",
-                    Bairro = "Cristo Rei",
-                    Cidade = "Curitiba",
-                    Estado = "Paraná",
-                    Pais = "Brasil"
-                }
-            );
+            var pessoaBuilder = new PessoaBuilder();
+            pessoaBuilder.BuildSingleState();
+
+            var pessoaId = await repository.IncluirAsync(pessoaBuilder.Pessoa());
 
             Assert.Equal(1, pessoaId);
         }

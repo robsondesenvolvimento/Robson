@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Robson.Common;
 using Robson.Data.Repositories;
 using Robson.Domain.Entities;
 using Robson.Services.Common.Models;
@@ -14,7 +15,7 @@ namespace Robson.Api.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    [EnableCors("PolicyRobson")]
+    [EnableCors(ConstantVars.POLICY_NAME)]
     public class PessoaController : ControllerBase
     {
 

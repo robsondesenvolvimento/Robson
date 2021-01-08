@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Robson.Api.Mappings;
 using Robson.Api.Services;
+using Robson.Common;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
 using Robson.Domain.Entities;
@@ -37,10 +38,11 @@ namespace Robson.Api
 
             services.AddCors(options =>
             {
-                options.AddPolicy("PolicyRobson",
+                options.AddPolicy(ConstantVars.POLICY_NAME,
                 builder => builder
                     .AllowAnyOrigin()
-                    .AllowAnyMethod()
+                    .WithMethods("GET", "POST", "PUT", "DELETE")
+                    //.AllowAnyMethod()
                     .AllowAnyHeader());
             });
 
@@ -91,7 +93,7 @@ namespace Robson.Api
             app.PessoaSeedingServiceStart();
             app.CarreiraSeedingServiceStart();
 
-            app.UseCors("PolicyRobson");
+            app.UseCors(ConstantVars.POLICY_NAME);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

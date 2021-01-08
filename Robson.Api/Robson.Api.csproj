@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Robson.Common\Robson.Common.csproj" />
     <ProjectReference Include="..\Robson.Data\Robson.Data.csproj" />
     <ProjectReference Include="..\Robson.Domain\Robson.Domain.csproj" />
     <ProjectReference Include="..\Robson.Services.Common\Robson.Services.Common.csproj" />
