@@ -2,6 +2,7 @@
 using Robson.Data.Context;
 using Robson.Data.Repositories;
 using Robson.Domain.Entities;
+using Robson.Testes.DataBuilder;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,30 +21,8 @@ namespace Robson.Testes.Data.CursoRepositoryTeste
 
             var repository = new CursoRepository(new(options));
 
-            var listaDeCursos = new List<Curso>
-            {
-                new()
-                {
-                    Nome = "Curso de Desenvolvimento C#",
-                    Descricao = "Curso de Desenvolvimento C#",
-                    InstituicaoId = 1,
-                    DataConclusao = DateTime.Parse("2020-12-12")
-                },
-                new()
-                {
-                    Nome = "Curso de Desenvolvimento Asp.Net Core",
-                    Descricao = "Curso de Desenvolvimento Asp.Net Core",
-                    InstituicaoId = 1,
-                    DataConclusao = DateTime.Parse("2020-11-12")
-                },
-                new()
-                {
-                    Nome = "Curso de Desenvolvimento C++",
-                    Descricao = "Curso de Desenvolvimento C++",
-                    InstituicaoId = 1,
-                    DataConclusao = DateTime.Parse("2020-11-12")
-                }
-            };
+            var listaDeCursos = new CursoBuilder()
+                .BuildListState();
 
             await repository.IncluirListaAsync(listaDeCursos);
 

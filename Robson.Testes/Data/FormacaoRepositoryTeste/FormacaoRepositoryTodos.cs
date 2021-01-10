@@ -2,6 +2,7 @@
 using Robson.Data.Context;
 using Robson.Data.Repositories;
 using Robson.Domain.Entities;
+using Robson.Testes.DataBuilder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,39 +22,14 @@ namespace Robson.Testes.Data.FormacaoRepositoryTeste
 
             var repository = new FormacaoRepository(new(options));
 
-            var listaDeFormacoes = new List<Formacao>
-            {
-                new()
-                {
-                    Nome = "Curso de Desenvolvimento C#",
-                    Descricao = "Curso de Desenvolvimento C#",
-                    InstituicaoId = 1,
-                    DataInicio = DateTime.Parse("2020-12-12"),
-                    DataConclusao = DateTime.Parse("2020-12-12")
-                },
-                new()
-                {
-                    Nome = "Curso de Desenvolvimento Asp.Net Core",
-                    Descricao = "Curso de Desenvolvimento Asp.Net Core",
-                    InstituicaoId = 1,
-                    DataInicio = DateTime.Parse("2020-12-12"),
-                    DataConclusao = DateTime.Parse("2020-11-12")
-                },
-                new()
-                {
-                    Nome = "Curso de Desenvolvimento C++",
-                    Descricao = "Curso de Desenvolvimento C++",
-                    InstituicaoId = 1,
-                    DataInicio = DateTime.Parse("2020-12-12"),
-                    DataConclusao = DateTime.Parse("2020-11-12")
-                }
-            };
+            var listaDeFormacoes = new FormacaoBuilder()
+                .BuildListState();
 
             await repository.IncluirListaAsync(listaDeFormacoes);
 
             var totalDeRegistrosInseridos = await repository.Todos();
 
-            Assert.Equal(3, totalDeRegistrosInseridos.ToList().Count);
+            Assert.True(totalDeRegistrosInseridos.ToList().Count > 1);
         }
     }
 }

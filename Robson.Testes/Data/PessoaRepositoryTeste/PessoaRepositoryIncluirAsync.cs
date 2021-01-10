@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Robson.Testes.Data.PessoaRepositoryTeste
 {
-    public class CarreiraRepositoryIncluirAsync
+    public class PessoaRepositoryIncluirAsync
     {
         [Fact]
         public async Task IncluirPessoaERetornaNovoIdDaPessoaIncluida()
@@ -19,10 +19,10 @@ namespace Robson.Testes.Data.PessoaRepositoryTeste
 
             var repository = new PessoaRepository(new(options));
 
-            var pessoaBuilder = new PessoaBuilder();
-            pessoaBuilder.BuildSingleState();
+            var pessoaBuilder = new PessoaBuilder()
+                .BuildSingleState();
 
-            var pessoaId = await repository.IncluirAsync(pessoaBuilder.Pessoa());
+            var pessoaId = await repository.IncluirAsync(pessoaBuilder);
 
             Assert.Equal(1, pessoaId);
         }

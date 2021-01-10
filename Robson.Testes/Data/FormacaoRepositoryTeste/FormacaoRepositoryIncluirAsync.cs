@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
+using Robson.Testes.DataBuilder;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -28,6 +29,11 @@ namespace Robson.Testes.Data.FormacaoRepositoryTeste
                     DataConclusao = DateTime.Parse("2020-12-12")
                 }
             );
+
+            var formacao = new FormacaoBuilder()
+                .BuildSingleState();
+
+            await repository.IncluirAsync(formacao);
 
             Assert.Equal(1, formacaoId);
         }

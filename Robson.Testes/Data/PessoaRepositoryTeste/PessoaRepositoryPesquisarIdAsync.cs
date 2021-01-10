@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
+using Robson.Testes.DataBuilder;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Robson.Testes.Data.PessoaRepositoryTeste
 {
-    public class CarreiraRepositoryPesquisarIdAsync
+    public class PessoaRepositoryPesquisarIdAsync
     {
         [Fact]
         public async Task PesquisarPorIdERetornaPessoa()
@@ -18,56 +19,13 @@ namespace Robson.Testes.Data.PessoaRepositoryTeste
 
             var repository = new PessoaRepository(new(options));
 
-            await repository.IncluirAsync(
-                new()
-                {
-                    Nome = "Teste de Unidade Pessoa 1",
-                    Nascimento = DateTime.Parse("2019-07-21"),
-                    Celular = "(41) 98827-07693",
-                    Cep = "80050-205",
-                    Rua = "Rua Do Herval, 378",
-                    Complemento = "Apto. 3",
-                    Bairro = "Cristo Rei",
-                    Cidade = "Curitiba",
-                    Estado = "Paraná",
-                    Pais = "Brasil"
-                }
-            );
+            var pessoasBuilder = new PessoaBuilder()
+                .BuildListState();
 
-            await repository.IncluirAsync(
-                new()
-                {
-                    Nome = "Teste de Unidade Pessoa 2",
-                    Nascimento = DateTime.Parse("2019-07-21"),
-                    Celular = "(41) 98827-07693",
-                    Cep = "80050-205",
-                    Rua = "Rua Do Herval, 378",
-                    Complemento = "Apto. 3",
-                    Bairro = "Cristo Rei",
-                    Cidade = "Curitiba",
-                    Estado = "Paraná",
-                    Pais = "Brasil"
-                }
-            );
-
-            await repository.IncluirAsync(
-                new()
-                {
-                    Nome = "Teste de Unidade Pessoa 3",
-                    Nascimento = DateTime.Parse("2019-07-21"),
-                    Celular = "(41) 98827-07693",
-                    Cep = "80050-205",
-                    Rua = "Rua Do Herval, 378",
-                    Complemento = "Apto. 3",
-                    Bairro = "Cristo Rei",
-                    Cidade = "Curitiba",
-                    Estado = "Paraná",
-                    Pais = "Brasil"
-                }
-            );
+            await repository.IncluirListaAsync(pessoasBuilder);
 
             var buscaPessoa = await repository.PesquisarIdAsync(2);
-            Assert.Equal("Teste de Unidade Pessoa 2", buscaPessoa.Nome);
+            Assert.Equal("Henrique Casagrande dos Santos Alves", buscaPessoa.Nome);
         }
     }
 }

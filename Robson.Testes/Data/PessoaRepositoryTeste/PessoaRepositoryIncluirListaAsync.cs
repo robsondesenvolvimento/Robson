@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Robson.Testes.Data.PessoaRepositoryTeste
 {
-    public class CarreiraRepositoryIncluirListaAsync
+    public class PessoaRepositoryIncluirListaAsync
     {
         [Fact]
         public async Task IncluirListaDePessoasERetornaTotalDeRegistrosInseridos()
@@ -21,10 +21,10 @@ namespace Robson.Testes.Data.PessoaRepositoryTeste
 
             var repository = new PessoaRepository(new(options));
 
-            var pessoaBuilder = new PessoaBuilder();
-            pessoaBuilder.BuildListState();
+            var pessoasBuilder = new PessoaBuilder()
+                .BuildListState();
 
-            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(pessoaBuilder.Pessoas());
+            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(pessoasBuilder);
 
             Assert.Equal(4, totalDeRegistrosInseridos);
         }

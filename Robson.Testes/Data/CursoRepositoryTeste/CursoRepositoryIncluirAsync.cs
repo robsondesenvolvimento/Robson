@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
+using Robson.Testes.DataBuilder;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -18,15 +19,10 @@ namespace Robson.Testes.Data.CursoRepositoryTeste
 
             var repository = new CursoRepository(new(options));
 
-            var cursoId = await repository.IncluirAsync(
-                new()
-                {
-                    Nome = "Curso de Desenvolvimento C#",
-                    Descricao = "Curso de Desenvolvimento C#",
-                    InstituicaoId = 1,
-                    DataConclusao = DateTime.Parse("2020-12-12")
-                }
-            );
+            var cursoBuilder = new CursoBuilder()
+                .BuildSingleState();
+
+            var cursoId = await repository.IncluirAsync(cursoBuilder);
 
             Assert.Equal(1, cursoId);
         }

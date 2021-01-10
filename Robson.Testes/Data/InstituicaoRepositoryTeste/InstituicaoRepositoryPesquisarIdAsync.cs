@@ -2,6 +2,7 @@
 using Robson.Data.Context;
 using Robson.Data.Repositories;
 using Robson.Domain.Entities;
+using Robson.Testes.DataBuilder;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,19 +21,10 @@ namespace Robson.Testes.Data.InstituicaoRepositoryTeste
 
             var repository = new InstituicaoRepository(new(options));
 
-            var listaDeInstituicoes = new List<Instituicao>
-            {
-                new()
-                {
-                    Nome = "Alura"
-                },
-                new()
-                {
-                    Nome = "Udemy"
-                }
-            };
+            var instituicoes = new InstituicaoBuilder()
+                .BuildListState();
 
-            await repository.IncluirListaAsync(listaDeInstituicoes);
+            await repository.IncluirListaAsync(instituicoes);
 
             var buscaInstituicao = await repository.PesquisarIdAsync(2);
             Assert.Equal("Udemy", buscaInstituicao.Nome);

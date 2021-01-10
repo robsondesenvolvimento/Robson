@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Robson.Testes.DataBuilder
 {
-    public interface IBuilder
+    public interface IBuilder<T>
     {
-        void BuildSingleState();
-        void BuildListState();
+        T BuildSingleState();
+        List<T> BuildListState();
         void Reset();
     }
 }

@@ -7,37 +7,33 @@ using System.Threading.Tasks;
 
 namespace Robson.Testes.DataBuilder
 {
-    public class PessoaBuilder : IBuilder
+    public class PessoaBuilder : IBuilder<Pessoa>
     {
         private List<Pessoa> _pessoas;
 
         public PessoaBuilder()
         {
-            _pessoas = new List<Pessoa>();
+            _pessoas = new();
         }
 
-        public void BuildSingleState()
+        public Pessoa BuildSingleState()
         {
-            _pessoas.Clear();
-
-            _pessoas.Add(
-                new()
-                {
-                    Nome = "Robson Candido dos Santos Alves",
-                    Nascimento = DateTime.Parse("1980-08-29"),
-                    Celular = "(41) 0000-00",
-                    Cep = "80050-205",
-                    Rua = "Rua do Herval, 0000",
-                    Complemento = "Apto. 1",
-                    Bairro = "Cristo Rei",
-                    Cidade = "Curitiba",
-                    Estado = "Paraná",
-                    Pais = "Brasil"
-                }
-            );
+            return new()
+            {
+                Nome = "Robson Candido dos Santos Alves",
+                Nascimento = DateTime.Parse("1980-08-29"),
+                Celular = "(41) 0000-00",
+                Cep = "80050-205",
+                Rua = "Rua do Herval, 0000",
+                Complemento = "Apto. 1",
+                Bairro = "Cristo Rei",
+                Cidade = "Curitiba",
+                Estado = "Paraná",
+                Pais = "Brasil"
+            };
         }
 
-        public void BuildListState()
+        public List<Pessoa> BuildListState()
         {
             _pessoas.Clear();
 
@@ -98,21 +94,13 @@ namespace Robson.Testes.DataBuilder
                     }
                 }
             );
+
+            return _pessoas;
         }
 
         public void Reset()
         {
             _pessoas.Clear();
-        }
-
-        public List<Pessoa> Pessoas()
-        {
-            return _pessoas;
-        }
-
-        public Pessoa Pessoa()
-        {
-            return _pessoas.FirstOrDefault();
         }
     }
 }
