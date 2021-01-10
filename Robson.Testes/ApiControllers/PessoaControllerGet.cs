@@ -7,10 +7,8 @@ using Robson.Api.Controllers;
 using Robson.Api.Mappings;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
-using Robson.Domain.Entities;
 using Robson.Testes.DataBuilder;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 

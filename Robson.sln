@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robson.Api", "Robson.Api\Ro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robson.Services.Common", "Robson.Services.Common\Robson.Services.Common.csproj", "{F9F615D9-689F-42DA-9925-28A31B34ABEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robson.Common", "Robson.Common\Robson.Common.csproj", "{F22FBA1E-1091-4FC4-BCC7-32985185C922}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robson.Common", "Robson.Common\Robson.Common.csproj", "{F22FBA1E-1091-4FC4-BCC7-32985185C922}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
