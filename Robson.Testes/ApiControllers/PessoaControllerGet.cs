@@ -42,7 +42,7 @@ namespace Robson.Testes.ApiControllers
 
             var pessoaController = new PessoaController(mockLogger.Object, mapper, repository);
 
-            var content = pessoaController.Get().Result;
+            var content = pessoaController.GetAsync().Result;
             Assert.IsType<OkObjectResult>(content.Result);
         }
     }

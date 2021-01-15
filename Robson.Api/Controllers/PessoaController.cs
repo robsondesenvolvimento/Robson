@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Robson.Api.Models.Result;
 using Robson.Common;
 using Robson.Data.Repositories;
 using Robson.Domain.Entities;
@@ -31,7 +33,10 @@ namespace Robson.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PessoaViewModel>>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PessoaViewModel>))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorException))]
+        public async Task<ActionResult<IEnumerable<PessoaViewModel>>> GetAsync()
         {
             var pessoas = await _pessoaRepository.Todos();
 
@@ -44,7 +49,10 @@ namespace Robson.Api.Controllers
         }
 
         [HttpGet("{id?}")]
-        public async Task<ActionResult<PessoaViewModel>> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PessoaViewModel))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorException))]
+        public async Task<ActionResult<PessoaViewModel>> GetAsync(int id)
         {
             var pessoa = await _pessoaRepository.PesquisarIdAsync(id);
 
@@ -57,16 +65,21 @@ namespace Robson.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PessoaViewModel>> Post(PessoaViewModel pessoaViewModel)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PessoaViewModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorException))]
+        public async Task<ActionResult<PessoaViewModel>> PostAsync([FromBody] PessoaViewModel pessoaViewModel)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
             var pessoa = _mapper.Map<Pessoa>(pessoaViewModel);
 
-            await _pessoaRepository.IncluirAsync(pessoa);
+            int id = await _pessoaRepository.IncluirAsync(pessoa);
 
-            return Ok(pessoaViewModel);
+            var uri = Url.Action("", new { id = id });
+
+            return Created(uri, pessoaViewModel);
         }
     }
 }

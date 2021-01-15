@@ -3,10 +3,12 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Robson.Api.Filters;
 using Robson.Api.Mappings;
 using Robson.Api.Services;
 using Robson.Common;
@@ -46,7 +48,15 @@ namespace Robson.Api
                     .AllowAnyHeader());
             });
 
-            services.AddControllers()
+            //services.Configure<ApiBehaviorOptions>(options => {
+            //    options.SuppressModelStateInvalidFilter = true;
+            //});
+
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(BadRequestFilter));
+                options.Filters.Add(typeof(InternalServerErrorFilter));
+            })
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
