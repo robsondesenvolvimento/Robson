@@ -52,7 +52,7 @@ namespace Robson.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PessoaViewModel))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorException))]
-        public async Task<ActionResult<PessoaViewModel>> GetAsync(int id)
+        public async Task<ActionResult<PessoaViewModel>> GetIdAsync(int id)
         {
             var pessoa = await _pessoaRepository.PesquisarIdAsync(id);
 
@@ -66,20 +66,23 @@ namespace Robson.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PessoaViewModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorException))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorException))]
         public async Task<ActionResult<PessoaViewModel>> PostAsync([FromBody] PessoaViewModel pessoaViewModel)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(ModelState);
 
             var pessoa = _mapper.Map<Pessoa>(pessoaViewModel);
 
-            int id = await _pessoaRepository.IncluirAsync(pessoa);
+            int idPessoa = await _pessoaRepository.IncluirAsync(pessoa);
 
-            var uri = Url.Action("", new { id = id });
+            var uri = Url.RouteUrl("default", new { id = idPessoa });
+            //var url = Url.Action("", "Pessoa", new { id = idPessoa }, protocol: Request.Scheme);
 
-            return Created(uri, pessoaViewModel);
+            var pessoaViewModelId = _mapper.Map<PessoaViewModel>(pessoa);
+
+            return Created(uri, pessoaViewModelId);
         }
     }
 }

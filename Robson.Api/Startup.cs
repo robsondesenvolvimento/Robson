@@ -48,9 +48,10 @@ namespace Robson.Api
                     .AllowAnyHeader());
             });
 
-            //services.Configure<ApiBehaviorOptions>(options => {
-            //    options.SuppressModelStateInvalidFilter = true;
-            //});
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             services.AddControllers(options =>
             {
@@ -109,6 +110,11 @@ namespace Robson.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "api/{controller}/{id?}"
+                );
             });
         }
     }
