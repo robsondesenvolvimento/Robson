@@ -11,7 +11,7 @@ namespace Robson.Testes.Data.FormacaoRepositoryTeste
     public class FormacaoRepositoryIncluirListaAsync
     {
         [Fact]
-        public async Task IncluirListaDeFormacoesERetornaTotalDeRegistrosInseridos()
+        public async Task IncluirListaDeFormacoesERetornaVerdadeiroSeFormacoesInseridos()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -22,9 +22,9 @@ namespace Robson.Testes.Data.FormacaoRepositoryTeste
             var listaDeFormacoes = new FormacaoBuilder()
                 .BuildListState();
 
-            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(listaDeFormacoes);
+            var formacoesIncluidas = await repository.IncluirListaAsync(listaDeFormacoes);
 
-            Assert.Equal(3, totalDeRegistrosInseridos);
+            Assert.True(formacoesIncluidas);
         }
     }
 }

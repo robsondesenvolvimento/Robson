@@ -11,7 +11,7 @@ namespace Robson.Testes.Data.CarreiraRepositoryTeste
     public class CursoRepositoryIncluirAsync
     {
         [Fact]
-        public async Task IncluirCarreiraERetornaNovoIdDaCarreiraIncluida()
+        public async Task IncluirCarreiraERetornaNovoIdDaCarreiraIncluidaEVerdadeiroSeCursoIncluido()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -22,9 +22,9 @@ namespace Robson.Testes.Data.CarreiraRepositoryTeste
             var carreira = new CarreiraBuilder()
                 .BuildSingleState();
 
-            var carreiraId = await repository.IncluirAsync(carreira);
+            await repository.IncluirAsync(carreira);
 
-            Assert.Equal(1, carreiraId);
+            Assert.Equal(1, carreira.Id);
         }
     }
 }

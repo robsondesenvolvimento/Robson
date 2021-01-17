@@ -11,7 +11,7 @@ namespace Robson.Testes.Data.CarreiraRepositoryTeste
     public class CursoRepositoryIncluirListaAsync
     {
         [Fact]
-        public async Task IncluirListaDeCarreirasERetornaTotalDeRegistrosInseridos()
+        public async Task IncluirListaDeCarreirasERetornaVerdadeiroSeCarreirasInseridas()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -22,9 +22,9 @@ namespace Robson.Testes.Data.CarreiraRepositoryTeste
             var listaDeCarreiras = new CarreiraBuilder()
                 .BuildListState();
 
-            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(listaDeCarreiras);
+            var cursosIncluidos = await repository.IncluirListaAsync(listaDeCarreiras);
 
-            Assert.Equal(3, totalDeRegistrosInseridos);
+            Assert.True(cursosIncluidos);
         }
     }
 }

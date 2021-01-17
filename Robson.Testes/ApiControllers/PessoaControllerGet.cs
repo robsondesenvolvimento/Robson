@@ -7,8 +7,11 @@ using Robson.Api.Controllers;
 using Robson.Api.Mappings;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
+using Robson.Services.Common.Models;
 using Robson.Testes.DataBuilder;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -42,8 +45,9 @@ namespace Robson.Testes.ApiControllers
 
             var pessoaController = new PessoaController(mockLogger.Object, mapper, repository);
 
-            var content = pessoaController.GetAsync().Result;
-            Assert.IsType<OkObjectResult>(content.Result);
+            var content = await pessoaController.GetAsync();
+            var okObjectResult = Assert.IsType<OkObjectResult>(content.Result).Value as IEnumerable<PessoaViewModel>;
+            Assert.IsType<PessoaViewModel>(okObjectResult.ToArray()[0]);
         }
     }
 }

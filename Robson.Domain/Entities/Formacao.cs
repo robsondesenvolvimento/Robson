@@ -4,7 +4,7 @@ namespace Robson.Domain.Entities
 {
     public class Formacao
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
 

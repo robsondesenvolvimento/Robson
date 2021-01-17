@@ -3,6 +3,7 @@ using Robson.Data.Context;
 using Robson.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,12 +18,12 @@ namespace Robson.Data.Repositories
             _databaseContext = databaseContext;
         }
 
-        public async Task AlterarAsync(Pessoa pessoa)
+        public async Task<bool> AlterarAsync(Pessoa pessoa)
         {
             try
             {
                 _databaseContext.Pessoas.Update(pessoa);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -30,13 +31,13 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task ExcluirAsync(int id)
+        public async Task<bool> ExcluirAsync(int id)
         {
             try
             {
                 var pessoa = await PesquisarIdAsync(id);
                 _databaseContext.Pessoas.Remove(pessoa);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -44,13 +45,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirAsync(Pessoa pessoa)
+        public async Task<bool> IncluirAsync(Pessoa pessoa)
         {
             try
             {
                 await _databaseContext.Pessoas.AddAsync(pessoa);
-                await _databaseContext.SaveChangesAsync();
-                return pessoa.Id;
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -58,13 +58,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirListaAsync(IEnumerable<Pessoa> pessoa)
+        public async Task<bool> IncluirListaAsync(IEnumerable<Pessoa> pessoa)
         {
             try
             {
                 await _databaseContext.Pessoas.AddRangeAsync(pessoa);
-                var alteracoes = await _databaseContext.SaveChangesAsync();
-                return alteracoes;
+                return await _databaseContext.SaveChangesAsync() == pessoa.ToList().Count;
             }
             catch (Exception e)
             {

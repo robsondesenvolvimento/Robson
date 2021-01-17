@@ -11,7 +11,7 @@ namespace Robson.Testes.Data.CursoRepositoryTeste
     public class InstituicaoRepositoryIncluirListaAsync
     {
         [Fact]
-        public async Task IncluirListaDeCursosERetornaTotalDeRegistrosInseridos()
+        public async Task IncluirListaDeCursosERetornaVerdadeiroSeInstituicoesInseridas()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -22,9 +22,9 @@ namespace Robson.Testes.Data.CursoRepositoryTeste
             var listaDeCursos = new CursoBuilder()
                 .BuildListState();
 
-            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(listaDeCursos);
+            var instituicoesIncluidas = await repository.IncluirListaAsync(listaDeCursos);
 
-            Assert.Equal(3, totalDeRegistrosInseridos);
+            Assert.True(instituicoesIncluidas);
         }
     }
 }

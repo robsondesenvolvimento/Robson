@@ -3,6 +3,7 @@ using Robson.Data.Context;
 using Robson.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,12 +18,12 @@ namespace Robson.Data.Repositories
             _databaseContext = databaseContext;
         }
 
-        public async Task AlterarAsync(Carreira carreira)
+        public async Task<bool> AlterarAsync(Carreira carreira)
         {
             try
             {
                 _databaseContext.Carreiras.Update(carreira);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -30,13 +31,13 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task ExcluirAsync(int id)
+        public async Task<bool> ExcluirAsync(int id)
         {
             try
             {
                 var carreira = await PesquisarIdAsync(id);
                 _databaseContext.Carreiras.Remove(carreira);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -44,13 +45,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirAsync(Carreira carreira)
+        public async Task<bool> IncluirAsync(Carreira carreira)
         {
             try
             {
                 await _databaseContext.Carreiras.AddAsync(carreira);
-                await _databaseContext.SaveChangesAsync();
-                return carreira.Id;
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -58,13 +58,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirListaAsync(IEnumerable<Carreira> carreiras)
+        public async Task<bool> IncluirListaAsync(IEnumerable<Carreira> carreiras)
         {
             try
             {
                 await _databaseContext.Carreiras.AddRangeAsync(carreiras);
-                var alteracoes = await _databaseContext.SaveChangesAsync();
-                return alteracoes;
+                return await _databaseContext.SaveChangesAsync() == carreiras.ToList().Count;
             }
             catch (Exception e)
             {

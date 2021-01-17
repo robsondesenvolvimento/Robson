@@ -11,7 +11,7 @@ namespace Robson.Testes.Data.FormacaoRepositoryTeste
     public class FormacaoRepositoryIncluirAsync
     {
         [Fact]
-        public async Task IncluirFormacaoERetornaNovoIdDaFormacaoIncluida()
+        public async Task IncluirFormacaoERetornaNovoIdDaFormacaoIncluidaEVerdadeiroSeFormacoesIncluidas()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -19,23 +19,13 @@ namespace Robson.Testes.Data.FormacaoRepositoryTeste
 
             var repository = new FormacaoRepository(new(options));
 
-            var formacaoId = await repository.IncluirAsync(
-                new()
-                {
-                    Nome = "Curso de Desenvolvimento C#",
-                    Descricao = "Curso de Desenvolvimento C#",
-                    InstituicaoId = 1,
-                    DataInicio = DateTime.Parse("2020-12-12"),
-                    DataConclusao = DateTime.Parse("2020-12-12")
-                }
-            );
-
             var formacao = new FormacaoBuilder()
                 .BuildSingleState();
 
-            await repository.IncluirAsync(formacao);
+            var formacaoIncluida = await repository.IncluirAsync(formacao);
 
-            Assert.Equal(1, formacaoId);
+            Assert.Equal(1, formacao.Id);
+            Assert.True(formacaoIncluida);
         }
     }
 }

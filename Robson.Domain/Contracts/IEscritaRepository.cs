@@ -5,9 +5,9 @@ namespace Robson.Domain.Contracts
 {
     public interface IEscritaRepository<T>
     {
-        Task<int> IncluirAsync(T objeto);
-        Task<int> IncluirListaAsync(IEnumerable<T> objeto);
-        Task AlterarAsync(T objeto);
-        Task ExcluirAsync(int id);
+        Task<bool> IncluirAsync(T objeto);
+        Task<bool> IncluirListaAsync(IEnumerable<T> objeto);
+        Task<bool> AlterarAsync(T objeto);
+        Task<bool> ExcluirAsync(int id);
     }
 }

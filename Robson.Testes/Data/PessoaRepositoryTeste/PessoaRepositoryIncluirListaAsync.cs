@@ -11,7 +11,7 @@ namespace Robson.Testes.Data.PessoaRepositoryTeste
     public class PessoaRepositoryIncluirListaAsync
     {
         [Fact]
-        public async Task IncluirListaDePessoasERetornaTotalDeRegistrosInseridos()
+        public async Task IncluirListaDePessoasERetornaVerdadeiroSeRegistrosInseridos()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -22,9 +22,9 @@ namespace Robson.Testes.Data.PessoaRepositoryTeste
             var pessoasBuilder = new PessoaBuilder()
                 .BuildListState();
 
-            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(pessoasBuilder);
+            var pessoasIncluidas = await repository.IncluirListaAsync(pessoasBuilder);
 
-            Assert.Equal(4, totalDeRegistrosInseridos);
+            Assert.True(pessoasIncluidas);
         }
     }
 }

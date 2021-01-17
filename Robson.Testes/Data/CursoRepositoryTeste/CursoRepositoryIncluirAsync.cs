@@ -11,7 +11,7 @@ namespace Robson.Testes.Data.CursoRepositoryTeste
     public class InstituicaoRepositoryIncluirAsync
     {
         [Fact]
-        public async Task IncluirCursosERetornaNovoIdDoCursoIncluido()
+        public async Task IncluirCursosERetornaNovoIdDoCursoIncluidoEVerdadeiroSeCursoIncluido()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -22,9 +22,10 @@ namespace Robson.Testes.Data.CursoRepositoryTeste
             var cursoBuilder = new CursoBuilder()
                 .BuildSingleState();
 
-            var cursoId = await repository.IncluirAsync(cursoBuilder);
+            var instituicaoIncluida = await repository.IncluirAsync(cursoBuilder);
 
-            Assert.Equal(1, cursoId);
+            Assert.Equal(1, cursoBuilder.Id);
+            Assert.True(instituicaoIncluida);
         }
     }
 }

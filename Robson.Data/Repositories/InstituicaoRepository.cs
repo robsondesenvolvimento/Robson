@@ -3,6 +3,7 @@ using Robson.Data.Context;
 using Robson.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,12 +18,12 @@ namespace Robson.Data.Repositories
             _databaseContext = databaseContext;
         }
 
-        public async Task AlterarAsync(Instituicao instituicao)
+        public async Task<bool> AlterarAsync(Instituicao instituicao)
         {
             try
             {
                 _databaseContext.Instituicoes.Update(instituicao);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -30,13 +31,13 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task ExcluirAsync(int id)
+        public async Task<bool> ExcluirAsync(int id)
         {
             try
             {
                 var instituicao = await PesquisarIdAsync(id);
                 _databaseContext.Instituicoes.Remove(instituicao);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -44,13 +45,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirAsync(Instituicao instituicao)
+        public async Task<bool> IncluirAsync(Instituicao instituicao)
         {
             try
             {
                 await _databaseContext.Instituicoes.AddAsync(instituicao);
-                await _databaseContext.SaveChangesAsync();
-                return instituicao.Id;
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -58,13 +58,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirListaAsync(IEnumerable<Instituicao> instituicao)
+        public async Task<bool> IncluirListaAsync(IEnumerable<Instituicao> instituicao)
         {
             try
             {
                 await _databaseContext.Instituicoes.AddRangeAsync(instituicao);
-                var alteracoes = await _databaseContext.SaveChangesAsync();
-                return alteracoes;
+                return await _databaseContext.SaveChangesAsync() == instituicao.ToList().Count;
             }
             catch (Exception e)
             {

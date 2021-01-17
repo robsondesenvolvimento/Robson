@@ -3,6 +3,7 @@ using Robson.Data.Context;
 using Robson.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,12 +18,12 @@ namespace Robson.Data.Repositories
             _databaseContext = databaseContext;
         }
 
-        public async Task AlterarAsync(Curso curso)
+        public async Task<bool> AlterarAsync(Curso curso)
         {
             try
             {
                 _databaseContext.Cursos.Update(curso);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -30,13 +31,13 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task ExcluirAsync(int id)
+        public async Task<bool> ExcluirAsync(int id)
         {
             try
             {
                 var curso = await PesquisarIdAsync(id);
                 _databaseContext.Cursos.Remove(curso);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -44,13 +45,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirAsync(Curso curso)
+        public async Task<bool> IncluirAsync(Curso curso)
         {
             try
             {
                 await _databaseContext.Cursos.AddAsync(curso);
-                await _databaseContext.SaveChangesAsync();
-                return curso.Id;
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -58,13 +58,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirListaAsync(IEnumerable<Curso> cursos)
+        public async Task<bool> IncluirListaAsync(IEnumerable<Curso> cursos)
         {
             try
             {
                 await _databaseContext.Cursos.AddRangeAsync(cursos);
-                var alteracoes = await _databaseContext.SaveChangesAsync();
-                return alteracoes;
+                return await _databaseContext.SaveChangesAsync() == cursos.ToList().Count;
             }
             catch (Exception e)
             {

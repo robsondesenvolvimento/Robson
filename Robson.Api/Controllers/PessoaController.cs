@@ -52,9 +52,9 @@ namespace Robson.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PessoaViewModel))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorException))]
-        public async Task<ActionResult<PessoaViewModel>> GetIdAsync(int id)
+        public async Task<ActionResult<PessoaViewModel>> GetIdAsync(int? id)
         {
-            var pessoa = await _pessoaRepository.PesquisarIdAsync(id);
+            var pessoa = await _pessoaRepository.PesquisarIdAsync((int)id);
 
             if (pessoa == null)
                 return NoContent();
@@ -75,14 +75,34 @@ namespace Robson.Api.Controllers
 
             var pessoa = _mapper.Map<Pessoa>(pessoaViewModel);
 
-            int idPessoa = await _pessoaRepository.IncluirAsync(pessoa);
+            if (!await _pessoaRepository.IncluirAsync(pessoa))
+                return NoContent();
 
-            var uri = Url.RouteUrl("default", new { id = idPessoa });
+
+            var uri = Url.RouteUrl("default", new { id = pessoa.Id });
             //var url = Url.Action("", "Pessoa", new { id = idPessoa }, protocol: Request.Scheme);
 
-            var pessoaViewModelId = _mapper.Map<PessoaViewModel>(pessoa);
+            var pessoaViewModelInsert = _mapper.Map<PessoaViewModel>(pessoa);
 
-            return Created(uri, pessoaViewModelId);
+            return Created(uri, pessoaViewModelInsert);
+        }
+
+        [HttpPut("{id?}")]
+        public async Task<ActionResult<PessoaViewModel>> PutAsync([FromRoute] int? id, [FromBody] PessoaViewModel pessoaViewModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var pessoa = _mapper.Map<Pessoa>(pessoaViewModel);
+
+            if (!await _pessoaRepository.AlterarAsync(pessoa))
+                return BadRequest();
+
+            var pessoaViewModelUpdate= _mapper.Map<PessoaViewModel>(pessoa);
+
+            var uri = Url.RouteUrl("default", new { id = pessoaViewModelUpdate.Id });
+
+            return Created(uri, pessoaViewModelUpdate);
         }
     }
 }

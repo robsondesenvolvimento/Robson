@@ -4,7 +4,7 @@ namespace Robson.Domain.Entities
 {
     public class Carreira
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
         public string Empresa { get; set; }
         public string Funcao { get; set; }
         public string Descricao { get; set; }

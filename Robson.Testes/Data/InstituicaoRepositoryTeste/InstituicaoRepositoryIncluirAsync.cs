@@ -11,7 +11,7 @@ namespace Robson.Testes.Data.InstituicaoRepositoryTeste
     public class InstituicaoRepositoryIncluirAsync
     {
         [Fact]
-        public async Task IncluirInstituicaoERetornaNovoIdDaInstituicaoIncluida()
+        public async Task IncluirInstituicaoERetornaNovoIdDaInstituicaoIncluidaEVerdadeiroSeInstituicoesIncluidas()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -22,9 +22,10 @@ namespace Robson.Testes.Data.InstituicaoRepositoryTeste
             var instituicao = new InstituicaoBuilder()
                 .BuildSingleState();
 
-            var instituicaoId = await repository.IncluirAsync(instituicao);
+            var instituicaoIncluida = await repository.IncluirAsync(instituicao);
 
-            Assert.Equal(1, instituicaoId);
+            Assert.Equal(1, instituicao.Id);
+            Assert.True(instituicaoIncluida);
         }
     }
 }

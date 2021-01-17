@@ -3,6 +3,7 @@ using Robson.Data.Context;
 using Robson.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,12 +18,12 @@ namespace Robson.Data.Repositories
             _databaseContext = databaseContext;
         }
 
-        public async Task AlterarAsync(Formacao formacao)
+        public async Task<bool> AlterarAsync(Formacao formacao)
         {
             try
             {
                 _databaseContext.Formacoes.Update(formacao);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -30,13 +31,13 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task ExcluirAsync(int id)
+        public async Task<bool> ExcluirAsync(int id)
         {
             try
             {
                 var formacao = await PesquisarIdAsync(id);
                 _databaseContext.Formacoes.Remove(formacao);
-                await _databaseContext.SaveChangesAsync();
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -44,13 +45,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirAsync(Formacao formacao)
+        public async Task<bool> IncluirAsync(Formacao formacao)
         {
             try
             {
                 await _databaseContext.Formacoes.AddAsync(formacao);
-                await _databaseContext.SaveChangesAsync();
-                return formacao.Id;
+                return await _databaseContext.SaveChangesAsync() == 1;
             }
             catch (Exception e)
             {
@@ -58,13 +58,12 @@ namespace Robson.Data.Repositories
             }
         }
 
-        public async Task<int> IncluirListaAsync(IEnumerable<Formacao> formacoes)
+        public async Task<bool> IncluirListaAsync(IEnumerable<Formacao> formacoes)
         {
             try
             {
                 await _databaseContext.Formacoes.AddRangeAsync(formacoes);
-                var alteracoes = await _databaseContext.SaveChangesAsync();
-                return alteracoes;
+                return await _databaseContext.SaveChangesAsync() == formacoes.ToList().Count;
             }
             catch (Exception e)
             {

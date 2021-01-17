@@ -11,7 +11,7 @@ namespace Robson.Testes.Data.InstituicaoRepositoryTeste
     public class InstituicaoRepositoryIncluirListaAsync
     {
         [Fact]
-        public async Task IncluirListaDeInstituicoesERetornaTotalDeRegistrosInseridos()
+        public async Task IncluirListaDeInstituicoesERetornaVerdadeiroSeeRegistrosInseridos()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -22,9 +22,9 @@ namespace Robson.Testes.Data.InstituicaoRepositoryTeste
             var instituicoes = new InstituicaoBuilder()
                 .BuildListState();
 
-            var totalDeRegistrosInseridos = await repository.IncluirListaAsync(instituicoes);
+            var instituicoesIncluidas = await repository.IncluirListaAsync(instituicoes);
 
-            Assert.Equal(2, totalDeRegistrosInseridos);
+            Assert.True(instituicoesIncluidas);
         }
     }
 }
