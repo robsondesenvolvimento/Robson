@@ -11,10 +11,6 @@ namespace Robson.Data.Context
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Formacao> Formacoes { get; set; }
 
-        public DatabaseContext()
-        {
-        }
-
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }

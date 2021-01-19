@@ -4,7 +4,7 @@ namespace Robson.Domain.Entities
 {
     public class Pessoa
     {
-        public int Id { get; init; }
+        public int Id { get; set; }
         public string Nome { get; set; }
         public DateTime Nascimento { get; set; }
         public string Celular { get; set; }

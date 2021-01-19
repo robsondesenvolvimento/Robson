@@ -88,6 +88,10 @@ namespace Robson.Api.Controllers
         }
 
         [HttpPut("{id?}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PessoaViewModel))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorException))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorException))]
         public async Task<ActionResult<PessoaViewModel>> PutAsync([FromRoute] int? id, [FromBody] PessoaViewModel pessoaViewModel)
         {
             if (!ModelState.IsValid)
@@ -98,11 +102,23 @@ namespace Robson.Api.Controllers
             if (!await _pessoaRepository.AlterarAsync(pessoa))
                 return BadRequest();
 
-            var pessoaViewModelUpdate= _mapper.Map<PessoaViewModel>(pessoa);
+            var pessoaViewModelUpdate = _mapper.Map<PessoaViewModel>(pessoa);
 
             var uri = Url.RouteUrl("default", new { id = pessoaViewModelUpdate.Id });
 
-            return Created(uri, pessoaViewModelUpdate);
+            return Ok(pessoaViewModelUpdate);
+        }
+
+        [HttpDelete("{id?}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorException))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorException))]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int? id)
+        {
+            if (!await _pessoaRepository.ExcluirAsync((int)id))
+                BadRequest();
+
+            return NoContent();
         }
     }
 }

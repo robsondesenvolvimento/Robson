@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -7,20 +6,15 @@ using Robson.Api.Controllers;
 using Robson.Api.Mappings;
 using Robson.Data.Context;
 using Robson.Data.Repositories;
-using Robson.Services.Common.Models;
 using Robson.Testes.DataBuilder;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
 
-namespace Robson.Testes.ApiControllers
+namespace Robson.Testes.ControllerBuilder
 {
-    public class PessoaControllerGet
+    public class PessoaControllerBuilder : IBuilderController<PessoaController>
     {
-        [Fact]
-        public async Task FazRequisicaoRecursoPessoaMetodoGetERecebeUmaListaDePessoasAsync()
+        public async Task<PessoaController> BuildController()
         {
             var mockLogger = new Mock<ILogger<PessoaController>>();
 
@@ -43,11 +37,7 @@ namespace Robson.Testes.ApiControllers
 
             var mapper = mockMapper.CreateMapper();
 
-            var pessoaController = new PessoaController(mockLogger.Object, mapper, repository);
-
-            var content = await pessoaController.GetAsync();
-            var okObjectResult = Assert.IsType<OkObjectResult>(content.Result).Value as IEnumerable<PessoaViewModel>;
-            Assert.IsType<PessoaViewModel>(okObjectResult.ToArray()[0]);
+            return new PessoaController(mockLogger.Object, mapper, repository);
         }
     }
 }
