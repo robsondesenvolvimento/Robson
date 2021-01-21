@@ -6,12 +6,13 @@ using Robson.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Robson.Api.Services
 {
     public static class SeedingService
     {
-        public static async void PessoaSeedingServiceStart(this IApplicationBuilder app)
+        public static async Task PessoaSeedingServiceStart(this IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -42,7 +43,7 @@ namespace Robson.Api.Services
             }
         }
 
-        public static async void CarreiraSeedingServiceStart(this IApplicationBuilder app)
+        public static async Task CarreiraSeedingServiceStart(this IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {

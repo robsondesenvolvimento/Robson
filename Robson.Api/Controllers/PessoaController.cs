@@ -78,13 +78,12 @@ namespace Robson.Api.Controllers
             if (!await _pessoaRepository.IncluirAsync(pessoa))
                 return NoContent();
 
-
-            var uri = Url.RouteUrl("default", new { id = pessoa.Id });
+            //var uri = Url.RouteUrl("default", new { id = pessoa.Id });
             //var url = Url.Action("", "Pessoa", new { id = idPessoa }, protocol: Request.Scheme);
 
             var pessoaViewModelInsert = _mapper.Map<PessoaViewModel>(pessoa);
 
-            return Created(uri, pessoaViewModelInsert);
+            return CreatedAtAction("", new { id = pessoa.Id }, pessoaViewModelInsert);
         }
 
         [HttpPut("{id?}")]
