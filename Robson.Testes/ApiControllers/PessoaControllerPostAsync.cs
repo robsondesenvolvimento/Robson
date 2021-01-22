@@ -1,12 +1,10 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Robson.Api;
 using Robson.Services.Common.Models;
+using Robson.Testes.HttpBuilder;
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
@@ -21,25 +19,12 @@ namespace Robson.Testes.ApiControllers
 
         public PessoaControllerPostAsync()
         {
-            var _server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
-            _client = _server.CreateClient();
-            _client.BaseAddress = new Uri("http://localhost/api/");
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+            _client = new HttpClientBuilder().BuildHttpClient();
         }
 
         [Fact]
-        public async Task PessoaControllerInsereNovaPessoa()
+        public async Task FazUmaRequisicaoPostERetornaStatusCodeCreated()
         {
-            //var response = await _client.GetAsync("pessoa");
-            //response.EnsureSuccessStatusCode();
-
-            //response.StatusCode.Should().Be(HttpStatusCode.OK, $"* Ocorreu uma falha: Status Code esperado ({(int)HttpStatusCode.OK}, {HttpStatusCode.OK.ToString()}) diferente do resultado gerado *");
-
-            //var responseOpbject = await response.Content.ReadFromJsonAsync<List<PessoaViewModel>>();
-
-            //responseOpbject.Should().BeOfType<List<PessoaViewModel>>("O objeto esperado não é um ViewModel");
-
             var pessoaViewModel = new PessoaViewModel
             {
                 Id = 0,
@@ -66,6 +51,10 @@ namespace Robson.Testes.ApiControllers
             var post = await _client.PostAsync("pessoa", contents);
 
             post.StatusCode.Should().Be(HttpStatusCode.Created, $"* Ocorreu uma falha: Status Code esperado ({(int)HttpStatusCode.Created}, {HttpStatusCode.Created.ToString()}) diferente do resultado gerado *");
+
+            var responseOpbject = await post.Content.ReadFromJsonAsync<PessoaViewModel>();
+
+            responseOpbject.Should().BeOfType<PessoaViewModel>("O objeto esperado não é um ViewModelPessoa");
         }
     }
 }

@@ -92,7 +92,7 @@ namespace Robson.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -105,8 +105,8 @@ namespace Robson.Api
 
             app.UseRouting();
 
-            app.PessoaSeedingServiceStart();
-            app.CarreiraSeedingServiceStart();
+            await app.PessoaSeedingServiceStart();
+            await app.CarreiraSeedingServiceStart();
 
             app.UseCors(ConstantVars.POLICY_NAME);
             app.UseAuthorization();
@@ -116,7 +116,7 @@ namespace Robson.Api
                 endpoints.MapControllers();
 
                 endpoints.MapControllerRoute(
-                    name: "default",
+                    name: "DefaultApi",
                     pattern: "api/{controller}/{id?}"
                 );
             });

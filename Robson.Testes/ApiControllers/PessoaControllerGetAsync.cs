@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentAssertions;
 using Robson.Services.Common.Models;
-using Robson.Testes.ControllerBuilder;
+using Robson.Testes.HttpBuilder;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -10,15 +12,24 @@ namespace Robson.Testes.ApiControllers
 {
     public class PessoaControllerGetAsync
     {
-        [Fact]
-        public async Task FazRequisicaoRecursoPessoaMetodoGetAsyncERecebeUmaListaDePessoas()
-        {
-            var pessoaController = await new PessoaControllerBuilder()
-                .BuildController();
+        private readonly HttpClient _client;
 
-            var content = await pessoaController.GetAsync();
-            var okObjectResult = Assert.IsType<OkObjectResult>(content.Result).Value as IEnumerable<PessoaViewModel>;
-            Assert.IsType<PessoaViewModel>(okObjectResult.ToArray()[0]);
+        public PessoaControllerGetAsync()
+        {
+            _client = new HttpClientBuilder().BuildHttpClient();
+        }
+
+        [Fact]
+        public async Task FazUmaRequisicaoGetERetornaStatusCodeOKeListaDePessoasNoCorpo()
+        {
+            var response = await _client.GetAsync("pessoa");
+            response.EnsureSuccessStatusCode();
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK, $"* Ocorreu uma falha: Status Code esperado ({(int)HttpStatusCode.OK}, {HttpStatusCode.OK.ToString()}) diferente do resultado gerado *");
+
+            var responseOpbject = await response.Content.ReadFromJsonAsync<List<PessoaViewModel>>();
+
+            responseOpbject.Should().BeOfType<List<PessoaViewModel>>("O objeto esperado não é um ViewModelPessoa");
         }
     }
 }
