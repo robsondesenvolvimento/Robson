@@ -40,6 +40,8 @@ namespace Robson.Api
                 options.UseInMemoryDatabase("Robson");
             });
 
+            services.AddHttpClient();
+
             services.AddScoped<IPessoaRepository<Pessoa>, PessoaRepository>();
 
             services.AddCors(options =>
@@ -89,6 +91,15 @@ namespace Robson.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Robson.Api", Version = "v1" });
             });
+
+            #region Versionamento WebApi
+            services.AddApiVersioning(option =>
+            {
+                option.AssumeDefaultVersionWhenUnspecified = true;
+                option.ReportApiVersions = true;
+                option.DefaultApiVersion = new ApiVersion(1, 0);
+            });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -117,7 +128,7 @@ namespace Robson.Api
 
                 endpoints.MapControllerRoute(
                     name: "DefaultApi",
-                    pattern: "api/{controller}/{id?}"
+                    pattern: "api/v{version:apiVersion}/{controller}/{id?}"
                 );
             });
         }

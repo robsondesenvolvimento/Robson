@@ -15,7 +15,8 @@ using System.Threading.Tasks;
 namespace Robson.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [Produces("application/json")]
     [EnableCors(ConstantVars.POLICY_NAME)]
     public class PessoaController : ControllerBase
