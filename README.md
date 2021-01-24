@@ -5,6 +5,9 @@
   * Visual Studio Community 2019
   * .NET 5
   * EntityFramework Core 5
+  * AutoMapper
+  * FluentValidation
+  * FluentAssertions
 
 ### Referencias
 ```
