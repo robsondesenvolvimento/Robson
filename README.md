@@ -28,6 +28,9 @@ https://www.learnentityframeworkcore5.com/whats-new-in-ef-core-5
 https://www.learnentityframeworkcore.com/
 https://balta.io/artigos/entity-framework-core-5-preview-1
 
+IHttpClientFactory
+https://docs.microsoft.com/pt-br/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
+
 Outros
 https://docs.microsoft.com/pt-br/aspnet/core/security/cors?view=aspnetcore-5.0
 https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/middleware/?view=aspnetcore-5.0#middleware-order
