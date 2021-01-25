@@ -1,5 +1,3 @@
-using System;
-
 namespace Robson.WebApplication.Models
 {
     public class ErrorViewModel

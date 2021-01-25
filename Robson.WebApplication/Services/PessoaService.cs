@@ -1,10 +1,7 @@
 ﻿using Robson.Services.Common.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Robson.WebApplication.Services
@@ -20,10 +17,11 @@ namespace Robson.WebApplication.Services
         public async Task<IEnumerable<PessoaViewModel>> GetPessoas()
         {
             var response = await _httpClient.GetAsync("pessoa");
-            var responseStream = await response.Content.ReadAsStreamAsync();
 
             if (response.IsSuccessStatusCode)
             {
+                var responseStream = await response.Content.ReadAsStreamAsync();
+
                 var options = new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,

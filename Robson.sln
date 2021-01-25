@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robson.Services.Common", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robson.Common", "Robson.Common\Robson.Common.csproj", "{F22FBA1E-1091-4FC4-BCC7-32985185C922}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robson.WebApplication", "Robson.WebApplication\Robson.WebApplication.csproj", "{D23E3CAF-38EC-469C-8532-C41BA05FCABB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robson.WebApplication", "Robson.WebApplication\Robson.WebApplication.csproj", "{D23E3CAF-38EC-469C-8532-C41BA05FCABB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,14 +8,11 @@ using Polly.Extensions.Http;
 using Robson.Common;
 using Robson.WebApplication.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Robson.WebApplication
 {
@@ -35,18 +31,11 @@ namespace Robson.WebApplication
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-                .WaitAndRetryAsync(1, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,retryAttempt)));
+                .WaitAndRetryAsync(2, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-            var poli = Policy.HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
-                .RetryAsync(2, onRetry: (message, retryCount) =>
-                {
-                    string msg = $"{retryCount}";
-                });
-
             services.AddHttpClient<IPessoaService, PessoaService>(client =>
             {
                 client.BaseAddress = new Uri("https://localhost:5001/api/v1/");

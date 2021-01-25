@@ -3,9 +3,7 @@ using Microsoft.Extensions.Logging;
 using Robson.WebApplication.Models;
 using Robson.WebApplication.Services;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Robson.WebApplication.Controllers
@@ -23,16 +21,25 @@ namespace Robson.WebApplication.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var pessoas = await _pessoaService.GetPessoas();
-            if (pessoas == null)
-                return NoContent();
+            try
+            {
+                var pessoas = await _pessoaService.GetPessoas();
 
-            ViewBag.pessoas = pessoas;
-            return View();
+                if (pessoas == null)
+                    return NoContent();
+
+                ViewBag.pessoas = pessoas;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+
         }
 
         public IActionResult Privacy()
-        {            
+        {
             return View();
         }
 
