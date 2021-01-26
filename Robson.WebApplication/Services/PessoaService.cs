@@ -14,6 +14,29 @@ namespace Robson.WebApplication.Services
         {
             _httpClient = httpClient;
         }
+
+        public async Task<PessoaViewModel> GetPessoa(int id)
+        {
+            var response = await _httpClient.GetAsync($"pessoa/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStreamAsync();
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    IgnoreNullValues = true,
+                    WriteIndented = false
+                };
+
+                var pessoa = await JsonSerializer.DeserializeAsync<PessoaViewModel>(responseStream, options);
+                return pessoa;
+            }
+
+            return null;
+        }
+
         public async Task<IEnumerable<PessoaViewModel>> GetPessoas()
         {
             var response = await _httpClient.GetAsync("pessoa");

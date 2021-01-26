@@ -7,5 +7,6 @@ namespace Robson.WebApplication.Services
     public interface IPessoaService
     {
         Task<IEnumerable<PessoaViewModel>> GetPessoas();
+        Task<PessoaViewModel> GetPessoa(int id);
     }
 }

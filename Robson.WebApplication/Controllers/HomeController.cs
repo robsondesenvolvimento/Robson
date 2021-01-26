@@ -23,12 +23,12 @@ namespace Robson.WebApplication.Controllers
         {
             try
             {
-                var pessoas = await _pessoaService.GetPessoas();
+                var pessoa = await _pessoaService.GetPessoa(1);
 
-                if (pessoas == null)
+                if (pessoa == null)
                     return NoContent();
 
-                ViewBag.pessoas = pessoas;
+                ViewBag.pessoa = pessoa;
                 return View();
             }
             catch (Exception ex)
@@ -36,11 +36,6 @@ namespace Robson.WebApplication.Controllers
                 return NotFound(ex.Message);
             }
 
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

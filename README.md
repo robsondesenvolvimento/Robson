@@ -8,6 +8,10 @@
   * AutoMapper
   * FluentValidation
   * FluentAssertions
+  * Polly
+  
+  * Tema bootstrap
+    https://startbootstrap.com/theme/resume
 
 ### Referencias
 ```
