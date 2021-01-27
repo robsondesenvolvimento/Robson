@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Robson.Data.Repositories
 {
-    public class CarreiraRepository : ICarreiraRepository
+    public class CarreiraRepository : ICarreiraRepository<Carreira>
     {
         private readonly DatabaseContext _databaseContext;
 

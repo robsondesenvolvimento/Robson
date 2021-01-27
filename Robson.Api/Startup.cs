@@ -43,6 +43,7 @@ namespace Robson.Api
             services.AddHttpClient();
 
             services.AddScoped<IPessoaRepository<Pessoa>, PessoaRepository>();
+            services.AddScoped<ICarreiraRepository<Carreira>, CarreiraRepository>();
 
             services.AddCors(options =>
             {
@@ -119,8 +120,9 @@ namespace Robson.Api
             await app.PessoaSeedingServiceStart();
             await app.CarreiraSeedingServiceStart();
 
-            app.UseCors(ConstantVars.POLICY_NAME);
             app.UseAuthorization();
+
+            app.UseCors(ConstantVars.POLICY_NAME);
 
             app.UseEndpoints(endpoints =>
             {

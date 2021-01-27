@@ -4,6 +4,7 @@ using Robson.WebApplication.Models;
 using Robson.WebApplication.Services;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Robson.WebApplication.Controllers
@@ -12,11 +13,13 @@ namespace Robson.WebApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPessoaService _pessoaService;
+        private readonly ICarreiraService _carreiraService;
 
-        public HomeController(ILogger<HomeController> logger, IPessoaService pessoaService)
+        public HomeController(ILogger<HomeController> logger, IPessoaService pessoaService, ICarreiraService carreiraService)
         {
             _logger = logger;
             _pessoaService = pessoaService;
+            _carreiraService = carreiraService;
         }
 
         public async Task<IActionResult> Index()
@@ -24,11 +27,13 @@ namespace Robson.WebApplication.Controllers
             try
             {
                 var pessoa = await _pessoaService.GetPessoa(1);
+                var carreiras = await _carreiraService.GetCarreiras();
 
-                if (pessoa == null)
+                if (pessoa == null || carreiras == null)
                     return NoContent();
 
                 ViewBag.pessoa = pessoa;
+                ViewBag.carreiras = carreiras.OrderByDescending(o => o.DataInicio).ToList();
                 return View();
             }
             catch (Exception ex)

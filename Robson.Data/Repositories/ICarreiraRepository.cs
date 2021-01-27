@@ -1,9 +1,8 @@
 ﻿using Robson.Domain.Contracts;
-using Robson.Domain.Entities;
 
 namespace Robson.Data.Repositories
 {
-    public interface ICarreiraRepository : IEscritaRepository<Carreira>, ILeituraRepository<Carreira>
+    public interface ICarreiraRepository<T> : IEscritaRepository<T>, ILeituraRepository<T>
     {
     }
 }

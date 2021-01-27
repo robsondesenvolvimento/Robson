@@ -9,6 +9,7 @@ namespace Robson.Api.Mappings
         public ViewModelToDomainMappingProfile()
         {
             CreateMap<PessoaViewModel, Pessoa>();
+            CreateMap<CarreiraViewModel, Carreira>();
         }
     }
 }

@@ -45,6 +45,15 @@ namespace Robson.WebApplication
             })
                 .AddPolicyHandler(GetRetryPolicy());
 
+            services.AddHttpClient<ICarreiraService, CarreiraService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:5001/api/v1/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+                client.DefaultRequestHeaders.Add("User-Agent", ConstantVars.POLICY_NAME);
+            })
+                .AddPolicyHandler(GetRetryPolicy());
+
             services.AddControllersWithViews()
                 .AddJsonOptions(options =>
                 {
