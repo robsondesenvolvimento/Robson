@@ -1,4 +1,6 @@
-﻿@{ 
+﻿@using Robson.WebApplication.Extensions
+
+@{
     var pessoa = ViewBag.pessoa as Robson.Services.Common.Models.PessoaViewModel;
     var carreiras = ViewBag.carreiras as List<Robson.Services.Common.Models.CarreiraViewModel>;
 }
@@ -16,12 +18,15 @@
                 @pessoa.Rua · @pessoa.Bairro, @pessoa.Cep · @pessoa.Celular ·
                 <a href="mailto:@pessoa.Email">@pessoa.Email</a>
             </div>
-            <p class="lead mb-5">I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
+            <p class="lead mb-5">
+                @foreach (var linha in pessoa.Sobre.Split(Environment.NewLine))
+                {
+                    @linha.Replace(Environment.NewLine, String.Empty)<br>
+                }
+            </p>
             <div class="social-icons">
-                <a class="social-icon" href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a class="social-icon" href="#"><i class="fab fa-github"></i></a>
-                <a class="social-icon" href="#"><i class="fab fa-twitter"></i></a>
-                <a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
+                <a class="social-icon" href="https://www.linkedin.com/in/robson-curitiba/"><i class="fab fa-linkedin-in"></i></a>
+                <a class="social-icon" href="https://github.com/robsondesenvolvimento"><i class="fab fa-github"></i></a>
             </div>
         </div>
     </section>
@@ -29,18 +34,19 @@
     <!-- Experience-->
     <section class="resume-section" id="experience">
         <div class="resume-section-content">
-            <h2 class="mb-5">Experience</h2>
+            <h2 class="mb-5">Experiência</h2>
 
             @foreach (var carreira in carreiras)
             {
-                var dataFinal = @carreira.DataSaida.ToString("MMMM/yyyy") == "janeiro/0001" ? "Presente" : @carreira.DataSaida.ToString("MMMM/yyyy");
+                var dataFinal = @carreira.DataSaida.ToString("MMMM yyyy") == "janeiro 0001" ? "Presente" : @carreira.DataSaida.ToString("MMMM yyyy");
+
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                     <div class="flex-grow-1">
                         <h3 class="mb-0">@carreira.Funcao</h3>
                         <div class="subheading mb-3">@carreira.Empresa</div>
                         <p>@carreira.Descricao</p>
                     </div>
-                    <div class="flex-shrink-0"><span class="text-primary">@carreira.DataInicio.ToString("MMMM/yyyy") - @dataFinal</span></div>
+                    <div class="flex-shrink-0"><span class="text-primary">@carreira.DataInicio.ToString("MMMM yyyy").ToTitleCase() - @dataFinal.ToTitleCase()</span></div>
                 </div>
             }
 

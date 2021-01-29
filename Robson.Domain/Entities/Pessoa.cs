@@ -16,5 +16,6 @@ namespace Robson.Domain.Entities
         public string Cidade { get; set; }
         public string Estado { get; set; }
         public string Pais { get; set; }
+        public string Sobre { get; set; }
     }
 }

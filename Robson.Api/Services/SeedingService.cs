@@ -6,6 +6,7 @@ using Robson.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Robson.Api.Services
@@ -22,6 +23,12 @@ namespace Robson.Api.Services
 
                 if (!databaseContext.Pessoas.Any())
                 {
+                    var sobre = new StringBuilder();
+                    TimeSpan intervalo = DateTime.Now.Subtract(new DateTime(2000, 01, 01));
+                    sobre.AppendLine($"Possuo {new DateTime(intervalo.Ticks).Year} anos de experiência na área de desenvolvimento.");
+                    sobre.AppendLine("Já atuei como Instrutor de Programação em Delphi, Hardware e Informática Básica por 3 anos.");
+                    sobre.AppendLine("Atualemnte desenvolvendo em .NET e coordenando uma equipe de desenvolvimento.");
+
                     Pessoa pessoa = new()
                     {
                         Nome = "Robson Candido dos Santos Alves",
@@ -34,7 +41,8 @@ namespace Robson.Api.Services
                         Bairro = "Cristo Rei",
                         Cidade = "Curitiba",
                         Estado = "Paraná",
-                        Pais = "Brasil"
+                        Pais = "Brasil",
+                        Sobre = sobre.ToString()
                     };
 
                     var pessoaRepository = new PessoaRepository(databaseContext);
@@ -76,8 +84,8 @@ namespace Robson.Api.Services
                         new()
                         {
                             Empresa = "View Financial Systems",
-                            Funcao = "Desenvolvedor Delphi",
-                            Descricao = "Desenvolvimento de aplicações financeiras em Delphi e resposável de TI",
+                            Funcao = "Desenvolvedor Delphi e .NET",
+                            Descricao = "Desenvolvimento de aplicações financeiras em Delphi e .NET",
                             DataInicio = DateTime.Parse("2008-12-01"),
                             DataSaida = DateTime.Parse("2019-06-18")
                         },
@@ -94,8 +102,8 @@ namespace Robson.Api.Services
                         new()
                         {
                             Empresa = "Zylix Automação Industrial",
-                            Funcao = "Desenvolvedor .Net e resposável de TI",
-                            Descricao = "Desenvolvimento de aplicações notariais em Delphi",
+                            Funcao = "Desenvolvedor .NET e Coordenador de desenvolvimento",
+                            Descricao = "Desenvolvimento de aplicações .NET no setor de automação de carregamento e descarregamento de combustiveis",
                             DataInicio = DateTime.Parse("2020-07-13")
                         }
                     };
